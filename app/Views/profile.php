@@ -3,9 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Konsultasi - IWP Law Firm</title>
+    <title>Profil Saya - IWP Law Firm</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Lora:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="<?= base_url('css/dashboard.css') ?>">
+    <style>
+        /* Tambahan style khusus untuk halaman profil */
+        .profile-card {
+            background-color: var(--brand-dark-2);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            max-width: 800px;
+            margin: 2rem;
+        }
+        .profile-card h2 {
+            color: var(--brand-gold);
+            font-family: 'Lora', serif;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 1rem;
+        }
+        .profile-info-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 1.5rem;
+        }
+        .profile-info-grid dt {
+            font-weight: 500;
+            color: var(--text-gray);
+        }
+        .profile-info-grid dd {
+            margin: 0;
+            font-size: 1rem;
+            color: var(--text-light);
+        }
+        .profile-info-grid dd {
+            word-break: break-word; /* Ini akan memaksa teks pindah baris jika terlalu panjang */
+        }
+    </style>
 </head>
 <body>
     <div class="dashboard-wrapper">
@@ -54,37 +89,36 @@
                     <svg class="icon-open" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
                     <svg class="icon-close" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
                 </button>
-                <h1>Asisten Hukum AI</h1>
+                <h1>Informasi Profil</h1>
             </header>
 
-            <div class="chat-window" id="chat-window">
-                <div class="chat-message ai-message">
-                    <div class="avatar">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-                    </div>
-                    <div class="chat-bubble">
-                        Selamat datang di IWP Law Firm. Saya adalah asisten hukum AI Anda. Silakan ajukan pertanyaan hukum Anda. Perlu diingat, saya adalah AI dan jawaban saya bukan merupakan nasihat hukum resmi.
-                    </div>
-                </div>
+            <div class="chat-window">
+                <div class="profile-card">
+                    <h2>Detail Akun</h2>
+                    <dl class="profile-info-grid">
+                        <dt>Nama Lengkap</dt>
+                        <dd><?= esc($user['nama_lengkap']) ?></dd>
 
-                <div class="chat-message user-message">
-                     <div class="avatar">
-                        <?= substr(esc(session()->get('nama_lengkap')), 0, 1) ?>
-                    </div>
-                    <div class="chat-bubble">
-                        Halo, saya ingin bertanya tentang prosedur pendirian PT.
-                    </div>
+                        <dt>Email</dt>
+                        <dd><?= esc($user['email']) ?></dd>
+
+                        <dt>Nomor Handphone</dt>
+                        <dd><?= esc($user['nomor_handphone']) ?></dd>
+
+                        <dt>Tanggal Lahir</dt>
+                        <dd><?= esc(date('d F Y', strtotime($user['tanggal_lahir']))) ?></dd>
+
+                        <dt>Jenis Kelamin</dt>
+                        <dd><?= esc($user['jenis_kelamin']) ?></dd>
+
+                        <dt>Kota/Kabupaten</dt>
+                        <dd><?= esc($user['kota']) ?></dd>
+
+                        <dt>Akun Dibuat</dt>
+                        <dd><?= esc(date('d F Y, H:i', strtotime($user['created_at']))) ?> WITA</dd>
+                    </dl>
                 </div>
             </div>
-
-            <footer class="chat-input-area">
-                <div class="input-wrapper">
-                    <input type="text" id="chat-input" placeholder="Ketik pertanyaan Anda di sini..." autocomplete="off">
-                    <button id="send-button" aria-label="Kirim Pesan">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
-                    </button>
-                </div>
-            </footer>
         </main>
     </div>
     <script>

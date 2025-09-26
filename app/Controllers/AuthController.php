@@ -104,4 +104,14 @@ class AuthController extends BaseController
         $this->session->destroy();
         return redirect()->to('/login');
     }
+
+    public function profile()
+    {
+        $model = new UserModel();
+        $userId = session()->get('user_id');
+        $data['user'] = $model->find($userId);
+
+        // Tampilkan view profile.php dan kirim data user ke dalamnya
+        return view('profile', $data);
+    }
 }

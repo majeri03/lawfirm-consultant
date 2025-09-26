@@ -14,4 +14,5 @@ $routes->get('/logout', 'AuthController::logout');
 
 // Rute ini akan dilindungi oleh filter 'auth'
 $routes->get('/dashboard', 'AuthController::dashboard', ['filter' => 'auth']);
+$routes->get('/dashboard/profile', 'AuthController::profile', ['filter' => 'auth']);
 

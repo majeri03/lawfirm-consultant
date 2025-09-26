@@ -1,0 +1,350 @@
+/* public/css/dashboard.css */
+
+:root {
+    --brand-dark: #101010;
+    --brand-dark-2: #181818;
+    --brand-dark-3: #202020;
+    --brand-gold: #C9A461;
+    --brand-cream: #D4AF37;
+    --text-light: #F0F4F8;
+    --text-gray: #A0AEC0;
+    --border-color: #2D3748;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--brand-dark);
+    color: var(--text-light);
+    margin: 0;
+    overflow: hidden; /* Mencegah scrolling pada body utama */
+}
+
+.dashboard-wrapper {
+    display: flex;
+    height: 100vh;
+}
+
+/* --- Sidebar --- */
+.sidebar {
+    width: 280px;
+    background-color: var(--brand-dark-2);
+    border-right: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    /* JANGAN tambahkan padding di sini lagi */
+    transition: width 0.3s ease;
+    /* Kita atur tinggi maksimalnya agar tidak melebihi layar */
+    height: 100vh; 
+}
+
+.sidebar-header {
+    padding: 1.5rem; /* Pindahkan padding ke header */
+    flex-shrink: 0; /* Mencegah header menyusut */
+}
+
+.sidebar-content {
+    flex-grow: 1; /* Membuat elemen ini mengisi semua ruang kosong */
+    overflow-y: auto; /* HANYA elemen ini yang bisa di-scroll */
+    padding: 0 1.5rem; /* Tambahkan padding di sini */
+}
+
+.sidebar-header img {
+    max-height: 50px;
+    width: auto;
+}
+
+.user-profile {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.user-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-color: var(--brand-dark-3);
+    color: var(--brand-gold);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+    font-size: 2rem;
+    font-weight: bold;
+    border: 2px solid var(--brand-gold);
+}
+
+.user-name {
+    font-weight: 500;
+    font-size: 1.1rem;
+}
+
+.user-email {
+    font-size: 0.8rem;
+    color: var(--text-gray);
+}
+
+.nav-menu .nav-item {
+    display: flex;
+    align-items: center;
+    padding: 0.9rem 1rem;
+    border-radius: 8px;
+    margin-bottom: 0.5rem;
+    color: var(--text-gray);
+    text-decoration: none;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.nav-menu .nav-item:hover {
+    background-color: var(--brand-dark-3);
+    color: var(--text-light);
+}
+
+.nav-menu .nav-item.active {
+    background-color: var(--brand-gold);
+    color: var(--brand-dark);
+    font-weight: 500;
+}
+
+.nav-menu .nav-item svg {
+    margin-right: 1rem;
+    width: 20px;
+    height: 20px;
+}
+
+.sidebar-footer {
+    padding: 1.5rem; /* Pindahkan padding ke footer */
+    flex-shrink: 0; /* Mencegah footer menyusut */
+    margin-top: 0; /* Hapus margin-top: auto */
+}
+
+/* --- Main Content --- */
+.main-content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--brand-dark);
+}
+
+.chat-header {
+    padding: 1rem 2rem;
+    border-bottom: 1px solid var(--border-color);
+    background-color: var(--brand-dark-2);
+}
+
+.chat-header h1 {
+    font-size: 1.5rem;
+    font-family: 'Lora', serif;
+    color: var(--brand-gold);
+}
+
+.chat-window {
+    flex-grow: 1;
+    padding: 2rem;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Styling scrollbar */
+.chat-window::-webkit-scrollbar {
+    width: 8px;
+}
+.chat-window::-webkit-scrollbar-track {
+    background: var(--brand-dark-2);
+}
+.chat-window::-webkit-scrollbar-thumb {
+    background-color: #4A5568;
+    border-radius: 10px;
+}
+
+.chat-message {
+    max-width: 70%;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+.chat-message .avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    flex-shrink: 0;
+}
+
+.chat-bubble {
+    padding: 1rem;
+    border-radius: 12px;
+    line-height: 1.6;
+}
+
+/* User Message */
+.user-message {
+    align-self: flex-end;
+    flex-direction: row-reverse;
+}
+
+.user-message .avatar {
+    background-color: var(--brand-dark-3);
+    color: var(--brand-cream);
+}
+
+.user-message .chat-bubble {
+    background-color: var(--brand-cream);
+    color: var(--brand-dark);
+    border-bottom-right-radius: 0;
+}
+
+/* AI Message */
+.ai-message {
+    align-self: flex-start;
+}
+
+.ai-message .avatar {
+    background-color: var(--brand-dark-3);
+}
+
+.ai-message .chat-bubble {
+    background-color: var(--brand-dark-3);
+    color: var(--text-light);
+    border-bottom-left-radius: 0;
+}
+
+/* Input Area */
+.chat-input-area {
+    padding: 1.5rem 2rem;
+    border-top: 1px solid var(--border-color);
+    background-color: var(--brand-dark-2);
+}
+
+.input-wrapper {
+    display: flex;
+    align-items: center;
+    background-color: var(--brand-dark-3);
+    border-radius: 12px;
+    padding: 0.5rem;
+    border: 1px solid var(--border-color);
+}
+
+#chat-input {
+    flex-grow: 1;
+    background: transparent;
+    border: none;
+    color: var(--text-light);
+    padding: 0.8rem;
+    font-size: 1rem;
+    outline: none;
+}
+
+#send-button {
+    background-color: var(--brand-gold);
+    border: none;
+    border-radius: 8px;
+    width: 44px;
+    height: 44px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--brand-dark);
+    transition: background-color 0.3s;
+}
+
+#send-button:hover {
+    background-color: #e6c55a;
+}
+/* Style Khusus Tombol Logout */
+.nav-item-logout, .nav-item-logout:visited {
+    color: #e53e3e; /* Warna merah untuk teks & ikon */
+    text-decoration: none; /* Hapus underline */
+    background: transparent; /* Pastikan tidak ada background default */
+}
+
+.nav-item-logout svg {
+    fill: currentColor; /* Membuat ikon SVG mewarisi warna merah */
+    width: 18px;
+    height: 18px;
+}
+
+.nav-item-logout:hover {
+    background-color: rgba(229, 62, 62, 0.15); /* Latar belakang merah transparan saat hover */
+    color: #fc8181; /* Warna merah lebih cerah saat hover */
+    text-decoration: none; /* Hapus underline saat hover */
+}
+
+.user-profile-link, .user-profile-link:hover {
+    text-decoration: none;
+}
+
+/* public/css/dashboard.css */
+
+/* ... (kode css yang sudah ada) ... */
+
+/* --- Tombol Menu Toggle --- */
+.menu-toggle {
+    display: none; /* Sembunyikan di desktop */
+    background: none;
+    border: none;
+    color: var(--text-gray);
+    cursor: pointer;
+    margin-right: 1rem;
+}
+
+/* --- Aturan Responsive untuk Mobile --- */
+@media (max-width: 768px) {
+    .menu-toggle {
+        display: block; /* Tampilkan di mobile */
+    }
+
+    .sidebar {
+        position: fixed; /* Ubah posisi jadi fixed */
+        left: 0;
+        top: 0;
+        height: 100%;
+        z-index: 1000;
+        transform: translateX(-100%); /* Sembunyikan di luar layar */
+        transition: transform 0.3s ease-in-out;
+        overflow-y: auto;
+    }
+
+    .sidebar.open {
+        transform: translateX(0); /* Tampilkan saat class 'open' ditambahkan */
+    }
+
+    .main-content {
+        width: 100%;
+    }
+    
+    .chat-header {
+        display: flex;
+        align-items: center;
+    }
+
+    /* Atur ulang grid di halaman profil */
+    .profile-info-grid {
+        grid-template-columns: 1fr; /* Ubah jadi 1 kolom */
+        gap: 1rem;
+    }
+    
+    .profile-card {
+        margin: 1rem;
+        padding: 1.5rem;
+    }
+    /* Pengaturan Ikon di Tombol Menu */
+    .menu-toggle .icon-close {
+    display: none; /* Sembunyikan ikon X secara default */
+    }
+
+    /* Jika tombolnya aktif (diklik) */
+    .menu-toggle.menu-active .icon-open {
+        display: none; /* Sembunyikan ikon hamburger */
+    }
+
+    .menu-toggle.menu-active .icon-close {
+        display: block; /* Tampilkan ikon X */
+    }   
+}
