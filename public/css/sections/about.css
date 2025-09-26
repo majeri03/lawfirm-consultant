@@ -1,0 +1,147 @@
+/* styles/sections/about.css */
+
+.about {
+  padding: 6rem 0;
+  background-color: #0d0d0d; /* Sedikit berbeda dari body untuk memisahkan section */
+  position: relative;
+  overflow: hidden;
+}
+
+/* Dekorasi latar belakang untuk sentuhan modern */
+.about::before {
+  content: '';
+  position: absolute;
+  top: 10%;
+  left: -20%;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(201, 164, 97, 0.05), transparent 70%);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.about .container {
+  position: relative;
+  z-index: 1;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.section-header .sub-heading {
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--brand-gold);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 0.5rem;
+}
+
+.section-header h2 {
+  font-size: clamp(2.5rem, 5vw, 3.5rem); /* Ukuran font responsif */
+  color: var(--text-light);
+}
+
+.about-content {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); /* Kolom kanan sedikit lebih besar */
+  gap: 4rem;
+  align-items: center;
+}
+
+.about-text h3 {
+  font-size: clamp(1.5rem, 3vw, 1.75rem);
+  line-height: 1.4;
+  margin-bottom: 1.5rem;
+  color: var(--text-light);
+  max-width: 500px;
+}
+
+.about-text p {
+  color: var(--text-gray);
+  margin-bottom: 1.5rem;
+  line-height: 1.7;
+}
+
+/* -- Infografis Core Values -- */
+.about-values {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 1rem;
+}
+
+.value-card {
+  background: rgba(26, 26, 26, 0.8);
+  border: 1px solid #2f2f2f;
+  border-radius: 12px;
+  padding: 2rem 1.5rem;
+  text-align: center;
+  transition: transform 0.3s ease, border-color 0.3s ease, background-color 0.3s ease;
+}
+
+.value-card:hover {
+  transform: translateY(-8px);
+  border-color: rgba(201, 164, 97, 0.6);
+  background-color: #1f1f1f;
+}
+
+.value-card .value-icon {
+  margin-bottom: 1rem;
+  color: var(--brand-gold);
+  opacity: 0.9;
+}
+
+.value-card h4 {
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-light);
+}
+
+/* -- Animasi Teks -- */
+.fade-in-up {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s cubic-bezier(0.65, 0, 0.35, 1), transform 0.8s cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+.fade-in-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Aturan untuk Staggered Animation (animasi berurutan) */
+.stagger-animation > * {
+  transition-delay: var(--stagger-delay, 0ms);
+}
+
+
+/* -- Aturan Responsif -- */
+@media (max-width: 992px) {
+  .about-content {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+  .about-text {
+    text-align: center;
+  }
+  .about-text h3 {
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+@media (max-width: 576px) {
+  .about {
+    padding: 4rem 0;
+  }
+  .section-header {
+    margin-bottom: 3rem;
+  }
+  .value-card {
+    padding: 1.5rem 1rem;
+  }
+}

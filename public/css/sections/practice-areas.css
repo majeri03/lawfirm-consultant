@@ -1,0 +1,136 @@
+/* styles/sections/practice-areas.css */
+
+.practice-areas {
+  padding: 6rem 0;
+  background-color: var(--brand-dark); /* Warna brand-dark agar menyatu */
+  position: relative;
+  overflow: hidden;
+}
+
+/* Dekorasi gradien di latar belakang */
+.practice-areas::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  right: -25%;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(201, 164, 97, 0.07), transparent 70%);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.practice-areas .container {
+  position: relative;
+  z-index: 1;
+}
+
+/* -- Struktur Timeline Modern -- */
+.practice-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  max-width: 800px; /* Batasi lebar untuk fokus */
+  margin: 0 auto; /* Tengahkan timeline */
+  position: relative;
+}
+
+/* Garis vertikal di tengah timeline */
+.practice-timeline::before {
+  content: '';
+  position: absolute;
+  top: 20px;
+  bottom: 20px;
+  left: 38px;
+  width: 2px;
+  background-color: #2f2f2f;
+  transform-origin: top;
+  /* Animasi garis akan ditambahkan via JS */
+  transform: scaleY(0);
+  transition: transform 1s cubic-bezier(0.86, 0, 0.07, 1);
+}
+.practice-timeline.visible::before {
+    transform: scaleY(1);
+}
+
+
+.practice-item {
+  display: grid;
+  grid-template-columns: 80px 1fr; /* Kolom untuk ikon dan konten */
+  gap: 2rem;
+  align-items: flex-start;
+  position: relative;
+}
+
+.practice-icon {
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: #1a1a1a;
+  border: 1px solid #2f2f2f;
+  color: var(--brand-gold);
+  z-index: 2; /* Di atas garis */
+  transition: transform 0.4s ease, border-color 0.4s ease;
+}
+
+.practice-item:hover .practice-icon {
+    transform: scale(1.1);
+    border-color: var(--brand-gold);
+}
+
+.practice-icon svg {
+  width: 36px;
+  height: 36px;
+}
+
+.practice-details {
+  padding: 1.5rem 0;
+}
+
+.practice-details h3 {
+  font-size: 1.75rem;
+  margin-bottom: 0.75rem;
+  color: var(--text-light);
+}
+
+.practice-details p {
+  color: var(--text-gray);
+  line-height: 1.7;
+}
+
+/* -- Aturan Responsif -- */
+@media (max-width: 768px) {
+  .practice-timeline::before {
+    left: 28px; /* Sesuaikan posisi garis */
+  }
+
+  .practice-item {
+    grid-template-columns: 60px 1fr; /* Perkecil kolom ikon */
+    gap: 1.5rem;
+  }
+
+  .practice-icon {
+    width: 60px;
+    height: 60px;
+  }
+
+  .practice-icon svg {
+    width: 28px;
+    height: 28px;
+  }
+}
+
+@media (max-width: 576px) {
+    .practice-areas {
+        padding: 4rem 0;
+    }
+    .practice-details {
+        padding: 0.5rem 0;
+    }
+    .practice-details h3 {
+        font-size: 1.5rem;
+    }
+}

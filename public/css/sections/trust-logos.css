@@ -1,0 +1,57 @@
+
+.trust-logos {
+  max-width: 500px;
+  width: 90%;
+  
+  position: absolute;
+  top: 0; 
+  left: 50%; 
+  transform: translateX(-50%); 
+  
+  z-index: 5; 
+
+  padding: 0 1rem;
+  box-sizing: border-box;
+
+  background: transparent;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+  
+  height: 60px;
+  display: flex;
+  align-items: center;
+}
+
+.trust-logos-row {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3rem;
+}
+
+.trust-logos-row img {
+  height: clamp(18px, 2.2vw, 28px);
+  opacity: 0.9;
+  filter: grayscale(100%) brightness(150%);
+  transform: translateY(6px);
+}
+
+.nav-open ~ main .trust-logos {
+  display: none;
+  visibility: hidden;
+}
+
+@media (max-width: 768px) {
+  .trust-logos {
+    height: 52px;
+    display: none;
+  }
+  .trust-logos-row {
+    gap: 1.5rem;
+  }
+}

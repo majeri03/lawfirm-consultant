@@ -1,0 +1,181 @@
+/* styles/sections/footer.css */
+
+.site-footer {
+  padding-top: 5rem;
+  background-color: #080808; /* Warna paling gelap untuk dasar */
+  position: relative;
+  overflow: hidden;
+  border-top: 1px solid rgba(201, 164, 97, 0.2);
+}
+
+/* --- Animasi Latar Belakang "Hidup" --- */
+.site-footer::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 150%;
+  padding-top: 150%;
+  background: radial-gradient(circle at center, rgba(201, 164, 97, 0.08) 0%, transparent 40%);
+  animation: rotateFooterBackground 25s linear infinite;
+  transform-origin: center;
+  z-index: 0;
+  pointer-events: none;
+}
+
+@keyframes rotateFooterBackground {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+.footer-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  position: relative;
+  z-index: 1;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr; /* 3 Kolom: About, Links, Social */
+  gap: 3rem;
+  padding-bottom: 4rem;
+}
+
+.footer-widget h4 {
+  font-size: 1.25rem;
+  color: var(--text-light);
+  margin-bottom: 1.5rem;
+  position: relative;
+}
+/* Garis bawah judul widget */
+.footer-widget h4::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  width: 40px;
+  height: 2px;
+  background-color: var(--brand-gold);
+}
+
+/* Kolom Tentang Kami */
+.footer-about .footer-logo img {
+    height: 60px;
+    margin-bottom: 1rem;
+}
+.footer-about p {
+  color: var(--text-gray);
+  line-height: 1.7;
+  padding-right: 2rem; /* Agar tidak terlalu lebar */
+}
+
+/* Kolom Tautan Cepat */
+.footer-links ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.footer-links ul li {
+  margin-bottom: 0.75rem;
+}
+.footer-links ul a {
+  color: var(--text-gray);
+  transition: color 0.3s ease, padding-left 0.3s ease;
+}
+.footer-links ul a:hover {
+  color: var(--brand-gold);
+  padding-left: 5px;
+}
+
+/* Kolom Ikuti Kami */
+.social-icons {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+.social-icons a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #2a2a2a;
+  color: var(--text-light);
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+.social-icons a:hover {
+  background-color: var(--brand-gold);
+  color: var(--brand-dark);
+  transform: translateY(-3px);
+}
+.social-icons svg {
+  width: 20px;
+  height: 20px;
+}
+
+.lawindo-logo p {
+    font-size: 0.875rem;
+    color: var(--text-gray);
+    margin-bottom: 0.5rem;
+}
+.lawindo-logo img {
+    max-height: 40px;
+    opacity: 0.8;
+}
+
+/* --- Bagian Bawah Footer (Copyright) --- */
+.footer-bottom {
+  padding: 1.5rem 0;
+  border-top: 1px solid #2f2f2f;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap; /* Agar responsif */
+  gap: 1rem;
+}
+.footer-bottom p {
+  margin: 0;
+  font-size: 0.875rem;
+  color: #888;
+}
+.footer-bottom .tagline {
+    font-style: italic;
+}
+
+/* -- Aturan Responsif -- */
+@media (max-width: 992px) {
+  .footer-grid {
+    grid-template-columns: 1fr 1fr; /* 2 kolom di tablet */
+  }
+  .footer-about {
+    grid-column: 1 / -1; /* Kolom about jadi full-width */
+  }
+}
+
+@media (max-width: 768px) {
+  .footer-grid {
+    grid-template-columns: 1fr; /* 1 kolom di mobile */
+    text-align: center;
+  }
+  .footer-widget h4::after {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .footer-about p {
+    padding-right: 0;
+  }
+  .social-icons {
+    justify-content: center;
+  }
+  .footer-bottom {
+    flex-direction: column;
+    text-align: center;
+  }
+}
