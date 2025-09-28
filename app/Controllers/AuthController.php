@@ -7,6 +7,7 @@ use App\Models\UserModel;
 
 class AuthController extends BaseController
 {
+    protected $session;
     public function __construct()
     {
         helper(['form', 'url']);

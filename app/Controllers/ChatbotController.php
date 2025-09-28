@@ -3,16 +3,12 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
-use Google\Cloud\AIPlatform\V1\EndpointServiceClient;
-use Google\Cloud\AIPlatform\V1\PredictResponse;
-use Google\Cloud\AIPlatform\V1\Client\PredictionServiceClient;
-use Google\Protobuf\Value;
+use Config\Services;
 
 class ChatbotController extends BaseController
 {
     public function askAI()
     {
-        // Hanya izinkan request AJAX
         if (! $this->request->isAJAX()) {
             return $this->response->setStatusCode(403, 'Forbidden');
         }
@@ -23,47 +19,74 @@ class ChatbotController extends BaseController
         }
 
         try {
-            // --- KONFIGURASI YANG PERLU ANDA SESUAIKAN ---
-            $projectId = 'fair-canto-468811-q1'; // Ganti dengan Project ID Google Cloud Anda
-            $location = 'us-central1'; // Lokasi project, misal: us-central1, asia-southeast1 (Singapura)
-            $modelId = 'gemini-1.0-pro';    // Model yang akan digunakan
-            // -------------------------------------------
+            $apiKey = getenv('GEMINI_API_KEY');
 
-            $client = new PredictionServiceClient([
-                'apiEndpoint' => $location . '-aiplatform.googleapis.com'
-            ]);
+            if (empty($apiKey)) {
+                log_message('error', 'GEMINI_API_KEY tidak ditemukan di file .env');
+                return $this->response->setJSON(['error' => 'Konfigurasi layanan AI tidak valid.'])->setStatusCode(500);
+            }
 
-            $endpoint = $client->modelName($projectId, $location, $modelId);
+            // ▼▼▼ PERBAIKAN: Menyesuaikan nama model dengan dokumentasi terbaru ▼▼▼
+            // Menggunakan 'gemini-2.5-flash' sesuai contoh JavaScript yang Anda berikan.
+            $modelName = 'gemini-2.5-flash';
+            $apiUrl = 'https://generativelanguage.googleapis.com/v1beta/models/' . $modelName . ':generateContent?key=' . $apiKey;
+            // ▲▲▲ SELESAI ▲▲▲
 
-            $prompt = [
+            $payload = [
                 'contents' => [
-                    ['role' => 'user', 'parts' => [
-                        ['text' => $userPrompt]
-                    ]]
+                    [
+                        'parts' => [
+                            ['text' => $userPrompt]
+                        ]
+                    ]
                 ]
             ];
 
-            $parameters = new Value([
-                'struct_value' => [
-                    'temperature'     => 0.3,
-                    'maxOutputTokens' => 2048,
-                    'topP'            => 0.8,
-                    'topK'            => 40,
-                ]
+            // Log URL yang akan di-request untuk keperluan debugging
+            log_message('debug', '[ChatbotController] Requesting Gemini API URL: ' . $apiUrl);
+
+            $client = Services::curlrequest([
+                'timeout' => 45, // Waktu tunggu yang wajar untuk request AI
             ]);
 
-            // Kirim request ke Vertex AI
-            $response = $client->predict($endpoint, [$prompt], $parameters);
+            $response = $client->post($apiUrl, [
+                'headers' => [
+                    'Content-Type' => 'application/json',
+                ],
+                'json' => $payload
+            ]);
+            
+            $statusCode = $response->getStatusCode();
+            $body = $response->getBody();
 
-            // Ambil dan format jawaban dari AI
-            $predictionResult = $response->getPredictions()[0];
-            $aiContent = $predictionResult['content']['parts'][0]['text'];
+            if ($statusCode !== 200) {
+                log_message('error', "[ChatbotController] Gemini API Error (Status: {$statusCode}): {$body}");
+                
+                $errorData = json_decode($body, true);
+                $errorMessage = $errorData['error']['message'] ?? 'Layanan AI tidak dapat dijangkau atau terjadi kesalahan.';
 
-            return $this->response->setJSON(['reply' => $aiContent]);
+                return $this->response->setJSON(['error' => "Error dari API: " . $errorMessage])->setStatusCode($statusCode);
+            }
+
+            $result = json_decode($body, true);
+            
+            // Validasi struktur response dari Gemini API
+            if (!isset($result['candidates'][0]['content']['parts'][0]['text'])) {
+                log_message('error', '[ChatbotController] Invalid response structure: ' . $body);
+                return $this->response->setJSON(['error' => 'Format response dari AI tidak valid.'])->setStatusCode(500);
+            }
+            
+            $aiContent = $result['candidates'][0]['content']['parts'][0]['text'];
+
+            return $this->response->setJSON([
+                'reply'     => $aiContent,
+                'csrf_hash' => csrf_hash() 
+            ]);
 
         } catch (\Exception $e) {
-            log_message('error', '[ChatbotController] ' . $e->getMessage());
-            return $this->response->setJSON(['error' => 'Maaf, terjadi kesalahan saat menghubungi layanan AI.'])->setStatusCode(500);
+            log_message('error', '[ChatbotController] Exception: ' . $e->getMessage());
+            return $this->response->setJSON(['error' => 'Terjadi kesalahan pada server. Silakan coba lagi.'])->setStatusCode(500);
         }
     }
 }
+

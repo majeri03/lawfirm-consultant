@@ -111,3 +111,5 @@ _modules/*
 
 /results/
 /phpunit*.xml
+
+kunci-google-cloud.json

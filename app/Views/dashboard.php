@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Konsultasi - IWP Law Firm</title>
-    <meta name="csrf-token" content="<?= csrf_hash() ?>">
+    
+    <?= csrf_meta() ?>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Lora:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="<?= base_url('css/dashboard.css') ?>">
 </head>
@@ -90,7 +91,9 @@
             const menuToggle = document.getElementById('menu-toggle');
             const sidebar = document.querySelector('.sidebar');
             const userInitial = "<?= substr(esc(session()->get('nama_lengkap')), 0, 1) ?>";
-            const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+            
+            // Ambil token CSRF dari meta tag yang dibuat oleh `csrf_meta()`
+            let csrfToken = document.querySelector('meta[name="X-CSRF-TOKEN"]').getAttribute('content');
 
             // --- Fungsi untuk Toggle Sidebar ---
             if (menuToggle && sidebar) {
@@ -105,41 +108,42 @@
                 const userPrompt = chatInput.value.trim();
                 if (userPrompt === '') return;
 
-                // 1. Tampilkan pesan pengguna di UI
                 addMessageToUI(userPrompt, 'user');
                 chatInput.value = '';
-
-                // 2. Tampilkan indikator "AI sedang mengetik..."
                 addTypingIndicator();
 
-                // 3. Kirim data ke backend
                 try {
                     const response = await fetch('<?= base_url('/chatbot/ask') ?>', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
                             'X-Requested-With': 'XMLHttpRequest',
-                            'X-CSRF-TOKEN': csrfToken 
+                            'X-CSRF-TOKEN': csrfToken // Kirim token di header
                         },
-                        body: JSON.stringify({ prompt: userPrompt })
+                        body: JSON.stringify({ prompt: userPrompt }) // Kirim data sebagai JSON
                     });
 
-                    // Hapus indikator "mengetik" setelah response diterima
                     removeTypingIndicator();
 
                     if (!response.ok) {
-                        const errorData = await response.json();
-                        throw new Error(errorData.error || `HTTP error! status: ${response.status}`);
+                        let errorMsg = `HTTP error! status: ${response.status}`;
+                        try {
+                            const errorData = await response.json();
+                            errorMsg = errorData.error || errorData.message || errorMsg;
+                        } catch (e) {
+                            errorMsg = await response.text();
+                        }
+                        throw new Error(errorMsg);
                     }
 
                     const data = await response.json();
-                    
-                    // 4. Tampilkan jawaban AI di UI
+                    csrfToken = data.csrf_hash; 
                     addMessageToUI(data.reply, 'ai');
 
                 } catch (error) {
                     console.error('Fetch error:', error);
-                    addMessageToUI(`Error: ${error.message}`, 'ai', true);
+                    removeTypingIndicator(); 
+                    addMessageToUI(`Maaf, terjadi kesalahan: ${error.message}`, 'ai', true);
                 }
             };
 
@@ -155,9 +159,12 @@
                     avatarHtml = `<div class="avatar">${userInitial}</div>`;
                 }
                 
+                // Ganti newline (\n) dengan tag <br> agar terbaca di HTML
+                const formattedMessage = message.replace(/\n/g, '<br>');
+
                 messageElement.innerHTML = `
                     ${avatarHtml}
-                    <div class="chat-bubble">${message}</div>
+                    <div class="chat-bubble">${formattedMessage}</div>
                 `;
 
                 if(isError) {
@@ -165,7 +172,7 @@
                 }
 
                 chatWindow.appendChild(messageElement);
-                chatWindow.scrollTop = chatWindow.scrollHeight; // Auto-scroll ke bawah
+                chatWindow.scrollTop = chatWindow.scrollHeight;
             };
 
             const addTypingIndicator = () => {
