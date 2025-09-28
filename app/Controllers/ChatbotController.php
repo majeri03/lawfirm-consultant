@@ -65,7 +65,17 @@ class ChatbotController extends BaseController
                 $errorData = json_decode($body, true);
                 $errorMessage = $errorData['error']['message'] ?? 'Layanan AI tidak dapat dijangkau atau terjadi kesalahan.';
 
-                return $this->response->setJSON(['error' => "Error dari API: " . $errorMessage])->setStatusCode($statusCode);
+                // Periksa apakah ini error limit.
+                if (str_contains(strtolower($errorMessage), 'resource has been exhausted') || $statusCode === 429) {
+                    // Jika ya, kirim status 'limit_reached' dengan HTTP 200 OK
+                    return $this->response->setJSON([
+                        'status'    => 'limit_reached',
+                        'csrf_hash' => csrf_hash()
+                    ]); // <-- Perhatikan, tidak ada setStatusCode() lagi di sini, defaultnya adalah 200
+                }
+
+                // Jika error lain dari Gemini, lempar sebagai Exception agar ditangkap oleh blok catch utama
+                throw new \Exception("Error dari API: " . $errorMessage);
             }
 
             $result = json_decode($body, true);
@@ -79,13 +89,27 @@ class ChatbotController extends BaseController
             $aiContent = $result['candidates'][0]['content']['parts'][0]['text'];
 
             return $this->response->setJSON([
+                'status'    => 'success',
                 'reply'     => $aiContent,
                 'csrf_hash' => csrf_hash() 
             ]);
 
         } catch (\Exception $e) {
             log_message('error', '[ChatbotController] Exception: ' . $e->getMessage());
-            return $this->response->setJSON(['error' => 'Terjadi kesalahan pada server. Silakan coba lagi.'])->setStatusCode(500);
+
+            // ▼▼▼ PENAMBAHAN LOGIKA UNTUK TIMEOUT ▼▼▼
+            $errorMessage = 'Terjadi kesalahan pada server. Silakan coba lagi.';
+            
+            // Periksa apakah pesan exception mengandung kata "timed out"
+            if (str_contains(strtolower($e->getMessage()), 'timed out')) {
+                $errorMessage = 'Koneksi ke Asisten AI memakan waktu terlalu lama. Mohon coba beberapa saat lagi atau periksa koneksi internet Anda.';
+            }
+            // ▲▲▲ SELESAI ▲▲▲
+
+            return $this->response->setJSON([
+                'error'     => $errorMessage,
+                'csrf_hash' => csrf_hash() // Kirim juga hash baru untuk keamanan
+            ])->setStatusCode(500);
         }
     }
 }

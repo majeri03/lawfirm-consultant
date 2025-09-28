@@ -280,9 +280,7 @@ body {
     text-decoration: none;
 }
 
-/* public/css/dashboard.css */
 
-/* ... (kode css yang sudah ada) ... */
 
 /* --- Tombol Menu Toggle --- */
 .menu-toggle {
@@ -293,6 +291,61 @@ body {
     cursor: pointer;
     margin-right: 1rem;
 }
+
+.whatsapp-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    background-color: #25D366;
+    color: #ffffff;
+    padding: 0.75rem 1.25rem;
+    border-radius: 25px;
+    font-weight: 500;
+    text-decoration: none;
+    margin-top: 1rem;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.whatsapp-button:hover {
+    background-color: #128C7E;
+    transform: translateY(-2px);
+}
+.suggested-prompts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    padding-left: 66px; /* Sejajar dengan bubble chat AI */
+    margin-top: -1rem;
+    margin-bottom: 1.5rem;
+}
+
+.prompt-suggestion {
+    background-color: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-gray);
+    padding: 0.6rem 1rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.prompt-suggestion:hover {
+    background-color: var(--brand-dark-3);
+    color: var(--text-light);
+}
+.prompt-suggestion:hover {
+    background-color: var(--brand-dark-3);
+    color: var(--text-light);
+}
+
+
+
+
+
+
 
 /* --- Aturan Responsive untuk Mobile --- */
 @media (max-width: 768px) {
@@ -346,5 +399,6 @@ body {
 
     .menu-toggle.menu-active .icon-close {
         display: block; /* Tampilkan ikon X */
-    }   
+    } 
+    
 }
