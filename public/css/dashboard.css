@@ -348,17 +348,26 @@ body {
 
 
 /* --- Aturan Responsive untuk Mobile --- */
+/* --- Aturan Responsive untuk Mobile (VERSI PERBAIKAN) --- */
 @media (max-width: 768px) {
+    .chat-header {
+        display: flex;
+        align-items: center;
+        position: relative; /* Diperlukan agar z-index bekerja */
+        z-index: 1001; /* Pastikan header di atas konten */
+    }
+
     .menu-toggle {
-        display: block; /* Tampilkan di mobile */
+        display: block; /* Tampilkan tombol di mobile */
+        z-index: 1002; /* PENTING: Posisikan tombol di lapisan paling atas */
     }
 
     .sidebar {
-        position: fixed; /* Ubah posisi jadi fixed */
+        position: fixed;
         left: 0;
         top: 0;
         height: 100%;
-        z-index: 1000;
+        z-index: 1000; /* Sidebar berada di bawah tombol menu */
         transform: translateX(-100%); /* Sembunyikan di luar layar */
         transition: transform 0.3s ease-in-out;
         overflow-y: auto;
@@ -371,34 +380,29 @@ body {
     .main-content {
         width: 100%;
     }
-    
-    .chat-header {
-        display: flex;
-        align-items: center;
-    }
 
     /* Atur ulang grid di halaman profil */
     .profile-info-grid {
         grid-template-columns: 1fr; /* Ubah jadi 1 kolom */
         gap: 1rem;
     }
-    
+
     .profile-card {
         margin: 1rem;
         padding: 1.5rem;
     }
-    /* Pengaturan Ikon di Tombol Menu */
+
+    /* --- Pengaturan Ikon Tombol Menu --- */
+    .menu-toggle .icon-open {
+        display: block;
+    }
     .menu-toggle .icon-close {
-    display: none; /* Sembunyikan ikon X secara default */
+        display: none;
     }
-
-    /* Jika tombolnya aktif (diklik) */
     .menu-toggle.menu-active .icon-open {
-        display: none; /* Sembunyikan ikon hamburger */
+        display: none;
     }
-
     .menu-toggle.menu-active .icon-close {
-        display: block; /* Tampilkan ikon X */
+        display: block;
     } 
-    
 }

@@ -12,41 +12,7 @@
 </head>
 <body>
     <div class="dashboard-wrapper">
-        <aside class="sidebar">
-            <div class="sidebar-header">
-                <a href="<?= base_url('/dashboard') ?>"><img src="<?= base_url('images/logo-iwp-lawfirm-new-white-transparan.png') ?>" alt="IWP Law Firm Logo"></a>
-            </div>
-    
-            <div class="sidebar-content">
-                <a href="<?= base_url('/dashboard/profile') ?>" class="user-profile-link">
-                    <div class="user-profile">
-                        <div class="user-avatar">
-                            <?= substr(esc(session()->get('nama_lengkap')), 0, 1) ?>
-                        </div>
-                        <div class="user-name"><?= esc(session()->get('nama_lengkap')) ?></div>
-                        <div class="user-email"><?= esc(session()->get('email')) ?></div>
-                    </div>
-                </a>
-        
-                <nav class="nav-menu">
-                    <a href="<?= base_url('/dashboard') ?>" class="nav-item active">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-                        <span>Konsultasi AI</span>
-                    </a>
-                    <a href="<?= base_url('/dashboard/profile') ?>" class="nav-item">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                        <span>Profil Saya</span>
-                    </a>
-                </nav>
-            </div>
-        
-            <div class="sidebar-footer">
-                <a href="<?= base_url('/logout') ?>" class="nav-item nav-item-logout">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
-                    <span>Logout</span>
-                </a>
-            </div>
-        </aside>
+        <?= $this->include('templates/sidebar') ?>
 
         <main class="main-content">
              <header class="chat-header">

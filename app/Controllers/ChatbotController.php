@@ -26,11 +26,9 @@ class ChatbotController extends BaseController
                 return $this->response->setJSON(['error' => 'Konfigurasi layanan AI tidak valid.'])->setStatusCode(500);
             }
 
-            // ▼▼▼ PERBAIKAN: Menyesuaikan nama model dengan dokumentasi terbaru ▼▼▼
-            // Menggunakan 'gemini-2.5-flash' sesuai contoh JavaScript yang Anda berikan.
+
             $modelName = 'gemini-2.5-flash';
             $apiUrl = 'https://generativelanguage.googleapis.com/v1beta/models/' . $modelName . ':generateContent?key=' . $apiKey;
-            // ▲▲▲ SELESAI ▲▲▲
 
             $payload = [
                 'contents' => [
@@ -42,11 +40,10 @@ class ChatbotController extends BaseController
                 ]
             ];
 
-            // Log URL yang akan di-request untuk keperluan debugging
             log_message('debug', '[ChatbotController] Requesting Gemini API URL: ' . $apiUrl);
 
             $client = Services::curlrequest([
-                'timeout' => 45, // Waktu tunggu yang wajar untuk request AI
+                'timeout' => 45, 
             ]);
 
             $response = $client->post($apiUrl, [

@@ -17,7 +17,6 @@ class AuthController extends BaseController
     // Menampilkan halaman login/register
     public function index()
     {
-        // Jika sudah login, redirect ke dashboard
         if ($this->session->get('isLoggedIn')) {
             return redirect()->to('/dashboard');
         }
@@ -35,8 +34,8 @@ class AuthController extends BaseController
             'password_confirm' => 'required|matches[password]',
             'tanggal_lahir'   => 'required',
             'jenis_kelamin'   => 'required',
-            'provinsi'        => 'required', // Validasi untuk provinsi
-            'kota'            => 'required'  // Validasi untuk kota
+            'provinsi'        => 'required', 
+            'kota'            => 'required'  
         ];
 
         if ($this->validate($rules)) {
@@ -103,7 +102,7 @@ class AuthController extends BaseController
     public function logout()
     {
         $this->session->destroy();
-        return redirect()->to('/login');
+        return redirect()->to('/');
     }
 
     public function profile()
@@ -114,5 +113,10 @@ class AuthController extends BaseController
 
         // Tampilkan view profile.php dan kirim data user ke dalamnya
         return view('profile', $data);
+    }
+    public function contact()
+    {
+        // Fungsi ini hanya akan memuat view untuk halaman kontak di dashboard
+        return view('contact_dashboard');
     }
 }

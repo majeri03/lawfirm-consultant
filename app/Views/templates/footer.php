@@ -17,6 +17,7 @@
                     <li><a href="#testimonials">Testimoni</a></li>
                     <li><a href="https://legalife.iwplawfirm.com" target="_blank">Blog</a></li>
                     <li><a href="#contact">Hubungi Kami</a></li>
+                    <li><a href="/login">Masuk</a></li>
                 </ul>
             </div>
             <div class="footer-widget footer-social">
