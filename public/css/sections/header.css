@@ -77,7 +77,7 @@
   align-items: center;
   position: relative;
   overflow: hidden;
-  isolation: isolate; 
+  isolation: isolate;
 }
 
 .hero::before {
@@ -133,6 +133,8 @@
   display: flex;
   gap: 1rem;
   flex-wrap: wrap; /* MEMBUAT TOMBOL BISA TURUN KE BAWAH */
+  position: relative; /* Diperlukan agar z-index berfungsi */
+  z-index: 20;
 }
 
 .button {
