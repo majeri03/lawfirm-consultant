@@ -137,16 +137,16 @@
                          <div class="team-photo">
                             <img src="<?= base_url('images/idris-wiranata-lawyer.jpg') ?>" alt="Idris Wiranata">
                         </div>
-                        <h3>Lorem Ipsum</h3>
-                        <p>Lorem Ipsum</p>
+                        <h3>Idris Wiranata, A. Ma., S.H.</h3>
+                        <p>Founder & Managing Partner</p>
                     </div>
 
                     <div class="team-card fade-in-up" style="--stagger-delay: 100ms;">
                         <div class="team-photo">
-                            <img src="<?= base_url('images/idris-wiranata-lawyer.jpg') ?>" alt="Associate Lawyer 1">
+                            <img src="<?= base_url('images/akilfoto.jpg') ?>" alt="Associate Lawyer 1">
                         </div>
-                        <h3>Idris Wiranata, S.H.</h3>
-                        <p>Founder & Managing Partner</p>
+                        <h3>Ahmad Mutawakkil, S.H.</h3>
+                        <p>Advocate Associate</p>
                     </div>
 
                     <div class="team-card fade-in-up" style="--stagger-delay: 200ms;">
