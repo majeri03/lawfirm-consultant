@@ -21,6 +21,9 @@
                     <svg class="icon-close" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
                 </button>
                 <h1>Asisten Hukum AI</h1>
+                <a href="#" id="clear-chat-button" class="clear-chat-btn" title="Hapus Percakapan">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+                </a>
             </header>
 
             <div class="chat-window" id="chat-window">
@@ -47,7 +50,7 @@
         const sidebar = document.querySelector('.sidebar');
         const userInitial = "<?= substr(esc(session()->get('nama_lengkap')), 0, 1) ?>";
         const storageKey = `chatHistory-<?= session()->get('user_id') ?>`;
-        
+        const clearChatButton = document.getElementById('clear-chat-button');
         let csrfToken = document.querySelector('meta[name="X-CSRF-TOKEN"]').getAttribute('content');
         let conversationHistory = []; // Variabel untuk menyimpan riwayat chat
 
@@ -56,6 +59,19 @@
             localStorage.setItem(storageKey, JSON.stringify(conversationHistory));
         };
 
+        // --- EVENT LISTENER UNTUK TOMBOL HAPUS PERCAKAPAN ---
+        if (clearChatButton) {
+            clearChatButton.addEventListener('click', function(e) {
+                e.preventDefault(); // Mencegah link berpindah halaman
+
+                if (confirm('Apakah Anda yakin ingin menghapus riwayat percakapan ini?')) {
+                    localStorage.removeItem(storageKey);
+                    conversationHistory = [];
+                    chatWindow.innerHTML = '';
+                    addWelcomeMessage();
+                }
+            });
+        }
         // --- Fungsi untuk memuat percakapan dari localStorage ---
         const loadConversation = () => {
             const savedHistory = localStorage.getItem(storageKey);
@@ -173,8 +189,16 @@
             } catch (error) {
                 console.error('Fetch error:', error);
                 removeTypingIndicator(); 
-                addMessageToUI(`Maaf, terjadi kesalahan: ${error.message}`, 'ai', true);
-                conversationHistory.push({ sender: 'ai', message: `Maaf, terjadi kesalahan: ${error.message}`, isError: true });
+                
+                let errorMessage = `Maaf, terjadi kesalahan: ${error.message}.`;
+            
+             
+                if (error.message.includes('403')) {
+                    errorMessage = 'Sesi keamanan Anda tidak sinkron. Silakan segarkan (refresh) halaman ini untuk melanjutkan.';
+                }
+            
+                addMessageToUI(errorMessage, 'ai', true);
+                conversationHistory.push({ sender: 'ai', message: errorMessage, isError: true });
                 saveConversation();
             }
         };
