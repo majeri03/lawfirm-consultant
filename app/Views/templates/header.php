@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="<?= base_url('css/sections/footer.css') ?>">
 
     <link rel="icon" href="<?= base_url('favicon.ico') ?>" type="image/x-icon" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
     <nav class="navbar">

@@ -1,0 +1,160 @@
+/* public/css/report-form.css */
+.report-form-section {
+    padding: 4rem 0;
+    background-color: var(--brand-dark);
+}
+
+.form-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 3rem;
+    background-color: #1a1a1a;
+    border-radius: 12px;
+    border: 1px solid #2f2f2f;
+}
+
+.form-header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+}
+
+.form-header h1 {
+    color: var(--brand-gold);
+    font-family: 'Lora', serif;
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.form-header p {
+    color: var(--text-gray);
+    font-size: 1.1rem;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+
+.form-group {
+    margin-bottom: 0;
+}
+
+.full-width {
+    grid-column: 1 / -1;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: 0.875rem;
+    color: var(--text-gray);
+}
+
+.form-control, .form-select, .form-control[type="date"] {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    background-color: #2D3748;
+    border: 1px solid #4A5568;
+    border-radius: 8px;
+    color: var(--text-light);
+    font-size: 1rem;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    font-family: 'Inter', sans-serif;
+}
+
+.form-control:focus, .form-select:focus {
+    outline: none;
+    border-color: var(--brand-gold);
+    box-shadow: 0 0 0 3px rgba(201, 164, 97, 0.3);
+}
+
+textarea.form-control {
+    resize: vertical;
+}
+
+.btn-submit {
+    width: 100%;
+    padding: 1rem;
+    margin-top: 2rem;
+    background-color: var(--brand-cream);
+    border: none;
+    border-radius: 8px;
+    color: var(--brand-dark);
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.btn-submit:hover {
+    background-color: #e6c55a;
+    transform: translateY(-2px);
+}
+
+.alert {
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    border-radius: 8px;
+    text-align: center;
+    animation: slideDown 0.5s ease-out;
+}
+
+.alert-success {
+    background-color: rgba(45, 206, 137, 0.2);
+    color: #2dce89;
+    border: 1px solid #2dce89;
+}
+
+.error-message {
+    color: #f17b85;
+    font-size: 0.8rem;
+    margin-top: 0.25rem;
+}
+
+@media (max-width: 768px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+    .form-container {
+        padding: 2rem;
+    }
+}
+
+/* Styling for SweetAlert2 Popup */
+.swal2-popup {
+    background-color: #1a1a1a !important;
+    border-radius: 12px !important;
+    border: 1px solid #2f2f2f !important;
+}
+
+.swal2-title {
+    color: #C9A461 !important;
+    font-family: 'Lora', serif !important;
+}
+
+.swal2-html-container, .swal2-content {
+    color: #F0F4F8 !important;
+}
+
+.swal2-confirm {
+    background-color: #D4AF37 !important;
+    color: #101010 !important;
+    border-radius: 8px !important;
+    font-weight: 700 !important;
+    padding: 0.75rem 1.5rem !important;
+    transition: background-color 0.3s ease, transform 0.2s ease !important;
+}
+
+.swal2-confirm:hover {
+    transform: translateY(-2px) !important;
+    background-color: #e6c55a !important;
+}
+
+.swal2-icon.swal2-success .swal2-success-ring {
+    border-color: rgba(201, 164, 97, 0.3) !important;
+}
+
+.swal2-icon.swal2-success [class^=swal2-success-line] {
+    background-color: #C9A461 !important;
+}

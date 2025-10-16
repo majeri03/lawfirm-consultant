@@ -18,3 +18,6 @@ $routes->get('/dashboard/profile', 'AuthController::profile', ['filter' => 'auth
 $routes->get('/dashboard/contact', 'AuthController::contact', ['filter' => 'auth']);
 $routes->post('/chatbot/ask', 'ChatbotController::askAI', ['filter' => 'auth']);
 
+
+$routes->get('/pelajari-layanan', 'ReportController::index');
+$routes->post('/pelajari-layanan/save', 'ReportController::save');
