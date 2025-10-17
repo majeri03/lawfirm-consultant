@@ -16,6 +16,7 @@ $routes->get('/logout', 'AuthController::logout');
 $routes->get('/dashboard', 'AuthController::dashboard', ['filter' => 'auth']);
 $routes->get('/dashboard/profile', 'AuthController::profile', ['filter' => 'auth']);
 $routes->get('/dashboard/contact', 'AuthController::contact', ['filter' => 'auth']);
+$routes->get('/dashboard/report', 'AuthController::report', ['filter' => 'auth']);
 $routes->post('/chatbot/ask', 'ChatbotController::askAI', ['filter' => 'auth']);
 
 

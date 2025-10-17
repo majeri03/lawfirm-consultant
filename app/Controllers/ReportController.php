@@ -49,7 +49,7 @@ class ReportController extends BaseController
                 'tanggal_laporan'  => date('Y-m-d H:i:s'),
             ];
             $model->save($data);
-            return redirect()->to('/pelajari-layanan')->with('success', 'Laporan Anda telah berhasil dikirim.');
+            return redirect()->back()->with('success', 'Laporan Anda telah berhasil dikirim.');
         } else {
             return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
         }

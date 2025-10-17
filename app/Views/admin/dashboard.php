@@ -12,6 +12,7 @@
 <body>
 
     <div class="admin-container">
+        <div id="sidebar-overlay" style="display: none;"></div>
         <?= $this->include('templates/admin/sidebar') ?>
 
         <main class="admin-main-content">
@@ -96,8 +97,32 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    if (menuToggle && sidebar) {
-        menuToggle.addEventListener('click', () => sidebar.classList.toggle('open'));
+    const overlay = document.getElementById('sidebar-overlay');
+
+    if (menuToggle && sidebar && overlay) {
+        // Fungsi untuk membuka sidebar
+        const openSidebar = () => {
+            sidebar.classList.add('open');
+            overlay.style.display = 'block';
+        };
+
+        // Fungsi untuk menutup sidebar
+        const closeSidebar = () => {
+            sidebar.classList.remove('open');
+            overlay.style.display = 'none';
+        };
+
+        // Event listener untuk tombol hamburger
+        menuToggle.addEventListener('click', () => {
+            if (sidebar.classList.contains('open')) {
+                closeSidebar();
+            } else {
+                openSidebar();
+            }
+        });
+
+        // Event listener untuk overlay
+        overlay.addEventListener('click', closeSidebar);
     }
 
     const fetchReports = async () => {

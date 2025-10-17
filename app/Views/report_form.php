@@ -4,13 +4,13 @@
         <div class="container">
             <div class="form-container">
                 <div class="form-header">
-                    <h1>Laporan Penerimaan Klien</h1>
+                    <h1>Formulir Ajuan Bantuan Hukum</h1>
                     <p>Silakan isi formulir di bawah ini untuk menjadwalkan pertemuan dengan tim kami.</p>
                 </div>
 
-                <!-- <?php if(session()->getFlashdata('success')): ?>
+                 <?php if(session()->getFlashdata('success')): ?>
                     <div class="alert alert-success"><?= session()->getFlashdata('success') ?></div>
-                <?php endif; ?> -->
+                <?php endif; ?> 
                 
                 <?php $errors = session()->get('errors'); ?>
 

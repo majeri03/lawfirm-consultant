@@ -123,4 +123,10 @@ class AuthController extends BaseController
         // Fungsi ini hanya akan memuat view untuk halaman kontak di dashboard
         return view('contact_dashboard');
     }
+
+    public function report()
+    {
+        helper(['form']);
+        return view('report_form_dashboard'); // Kita akan buat view baru yg sesuai
+    }
 }
