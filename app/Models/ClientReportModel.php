@@ -25,6 +25,7 @@ class ClientReportModel extends Model
         'jenis_layanan',
         'jadwal_pertemuan',
         'deskripsi_kasus',
+        'status',
     ];
 
     // Dates

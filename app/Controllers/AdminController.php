@@ -18,7 +18,10 @@ class AdminController extends BaseController
 
             $data = $model->orderBy('created_at', 'DESC')->findAll();
 
-            return $this->response->setJSON($data);
+            return $this->response->setJSON([
+            'data'      => $data,
+            'csrf_hash' => csrf_hash()
+            ]);
         }
 
         return $this->response->setStatusCode(403, 'Forbidden');
@@ -36,7 +39,7 @@ class AdminController extends BaseController
             if ($report) {
                 $model->delete($id);
 
-                return $this->response->setJSON(['status' => 'success', 'message' => 'Laporan berhasil dihapus.']);
+                return $this->response->setJSON(['status' => 'success', 'message' => 'Laporan berhasil dihapus.', 'csrf_hash' => csrf_hash()]);
             }
 
             return $this->response->setStatusCode(404)->setJSON(['status' => 'error', 'message' => 'Laporan tidak ditemukan.']);
@@ -55,9 +58,12 @@ class AdminController extends BaseController
             $report = $model->find($id);
 
             if ($report) {
-                return $this->response->setJSON($report);
+                return $this->response->setJSON([
+                    'data'      => $report,
+                    'csrf_hash' => csrf_hash()
+                ]);
             }
-            return $this->response->setStatusCode(404)->setJSON(['message' => 'Laporan tidak ditemukan.']);
+            return $this->response->setStatusCode(404)->setJSON(['message' => 'Laporan tidak ditemukan.', 'csrf_hash' => csrf_hash()]);
         }
         return $this->response->setStatusCode(403, 'Forbidden');
     }

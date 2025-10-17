@@ -327,4 +327,7 @@ body {
 
     .content-wrapper { padding: 1.5rem; }
     .content-card { padding: 1.5rem; }
+    .swal2-container {
+        z-index: 9999 !important;
+    }
 }
