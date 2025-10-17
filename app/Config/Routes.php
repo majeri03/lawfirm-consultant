@@ -21,3 +21,13 @@ $routes->post('/chatbot/ask', 'ChatbotController::askAI', ['filter' => 'auth']);
 
 $routes->get('/pelajari-layanan', 'ReportController::index');
 $routes->post('/pelajari-layanan/save', 'ReportController::save');
+
+// Rute untuk Admin
+$routes->group('admin', ['filter' => 'admin'], static function ($routes) {
+    $routes->get('/', 'AdminController::dashboard');
+    $routes->get('reports', 'AdminController::getReports');
+    $routes->get('reports', 'AdminController::getReports'); // Untuk mengambil data tabel
+    $routes->get('report/(:num)', 'AdminController::viewReport/$1'); // Untuk melihat detail
+    $routes->post('report/update-status', 'AdminController::updateStatus');
+    $routes->delete('report/(:num)', 'AdminController::deleteReport/$1');
+});

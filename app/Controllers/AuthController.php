@@ -79,9 +79,13 @@ class AuthController extends BaseController
                     'nama_lengkap'  => $user['nama_lengkap'],
                     'email'         => $user['email'],
                     'isLoggedIn'    => true,
+                    'role'          => $user['role'],
                 ];
                 $this->session->set($sessionData);
 
+                if ($user['role'] === 'admin') {
+                    return redirect()->to('/admin');
+                }
                 return redirect()->to('/dashboard');
             } else {
                 $this->session->setFlashdata('error', 'Email atau password salah.');

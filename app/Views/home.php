@@ -13,7 +13,7 @@
                         <h1 >Jasa Hukum Profesional</h1>
                         <p>Hadapi masalah hukum Anda dengan percaya diri. Mulai dengan konsultasi gratis tanpa komitmen bersama tim ahli kami.</p>
                         <div class="hero-buttons">
-                            <a href="/pelajari-layanan" class="button button-secondary">Pelajari Layanan</a>
+                            <a href="/pelajari-layanan" class="button button-secondary">Ajukan Bantuan Hukum</a>
                             <a href="<?= base_url('/dashboard') ?>" class="button button-primary">Konsultasi Gratis Sekarang!</a>
                         </div>
                     </div>
